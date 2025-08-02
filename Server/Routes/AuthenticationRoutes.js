@@ -57,6 +57,11 @@ AuthRouter.get('/auth/google',
 AuthRouter.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
+        // Debug logging
+        console.log('Google OAuth callback - User authenticated:', req.user);
+        console.log('Session ID:', req.sessionID);
+        console.log('Session data:', req.session);
+        
         // Store user data in session and redirect
         res.redirect(`${process.env.FRONT_URL}/chat`);
     }
