@@ -156,11 +156,19 @@ app.post("/chat", upload.single('image'), async (req, res) => {
       }
     }
 
+    // Add system message for better formatting
+    const systemMessage = {
+      role: 'system',
+      content: 'You are a helpful AI assistant. Provide clear, well-formatted responses with proper spacing, line breaks, and structure. Use bullet points, numbered lists, and paragraphs to organize your information clearly. If the user asks in French, respond in French. If they ask in English, respond in English.'
+    };
+    
+    const messagesWithSystem = [systemMessage, ...messagesToSend];
+    
     const response = await axios.post(
       "https://api.groq.com/openai/v1/chat/completions",
       {
         model: "meta-llama/llama-4-scout-17b-16e-instruct",
-        messages: messagesToSend,
+        messages: messagesWithSystem,
         max_tokens: 1000
       },
       {

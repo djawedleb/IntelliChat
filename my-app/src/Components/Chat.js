@@ -369,7 +369,15 @@ export default function Chat({ user, onLogout, onUserUpdate }) {
                             className={`message ${msg.role}`}
                         >
                             <div className={`message-bubble ${msg.role}`}>
-                                {msg.content}
+                                <div 
+                                    className="message-content"
+                                    style={{ 
+                                        whiteSpace: 'pre-wrap',
+                                        wordWrap: 'break-word'
+                                    }}
+                                >
+                                    {msg.content}
+                                </div>
                                 {msg.imageUrl && (
                                     <img 
                                         src={msg.imageUrl} 
