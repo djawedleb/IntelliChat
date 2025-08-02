@@ -34,17 +34,26 @@ passport.use(new GoogleStrategy({
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      // Check if user already exists
+      // Check if user already exists by googleId first
       let user = await User.findOne({ googleId: profile.id });
       
       if (!user) {
-        // Create new user
-        user = await User.create({
-          name: profile.displayName,
-          email: profile.emails[0].value,
-          googleId: profile.id,
-          password: "google-auth" // You might want to handle this differently
-        });
+        // If no user with googleId, check if user exists with same email
+        user = await User.findOne({ email: profile.emails[0].value });
+        
+        if (user) {
+          // User exists with email but no googleId, update with googleId
+          user.googleId = profile.id;
+          await user.save();
+        } else {
+          // Create new user
+          user = await User.create({
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            googleId: profile.id,
+            password: "google-auth" // You might want to handle this differently
+          });
+        }
       }
       
       return done(null, user);

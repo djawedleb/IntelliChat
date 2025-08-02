@@ -58,7 +58,7 @@ AuthRouter.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
         // Store user data in session and redirect
-        res.redirect('http://localhost:3000/chat');
+        res.redirect(`${process.env.FRONT_URL}/chat`);
     }
 );
 
