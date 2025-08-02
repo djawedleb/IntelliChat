@@ -282,6 +282,6 @@ For support and questions:
 
 ---
 
-**Made with ❤️ by [Djawed-Lebaili]**
+**Made  by [Djawed-Lebaili]**
 
 *IntelliChat - Where AI meets conversation* 
